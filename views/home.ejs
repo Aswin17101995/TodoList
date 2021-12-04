@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container-fluid px-40">
+        <div class="heading  display-2">
+            TODO APP
+        </div>
+        <form action='/addtask' method="post">
+            <div class="des form-group">
+           
+                <lable class="text-muted" for="des">Description</lable><br>
+                <input  class="form-control form-control-lg"type="text" id="des" name="description" required>
+            </div>
+            <div class="cate_date ">
+                <div class="row">
+                    <div class=" col-sm">
+                        <label  class="text-muted" for="cat">CATEGORY</label><br>
+                        <select class="form-control form-control-lg" name="category" id="cat">
+                        <option value="personal">Personal</option>
+                        <option value="work">Work</option>
+                        <option value="study">Study</option>
+                        <option value="grocerry">Grocery</option>
+                        <option value="cleaning">Cleaning</option>
+                        </select>
+                    </div>
+                    <div class="date col-sm">
+                        <lable class="text-muted" for="date">Due Date</lable><br>
+                        <input  class="form-control form-control-lg" type="date" id="date" name="date" required>
+                    </div>
+                </div>
+               
+                <div class="buttons row">
+                    <div class="addtask btn btn_size btn-lg btn-block col-sm">
+                        <i class="fas fa-plus-square"></i>
+                       
+                        <input type="submit" class="btn btn-primary"  value=" ADD TASk"></i>
+                       
+                    </div>
+                    <button class="btn btn-danger col-sm" onclick="myfun()">
+                        Delete
+                    </button>
+                </div>  
+        </form>
+        
+            <div>
+                <div class="display-4 ">Tasks Pending </div>
+                <% for(var i in list){ %>
+                    <div class="card">
+                        <h5 class="card-header"> 
+                            <input class="boxes" type="checkbox" name='box' value="<%= list[i]._id %>"></a>
+                            <%= list[i].category %></h5>
+                        <div class="card-body">
+                        <h5 class="card-title"> <%= list[i].description %> </h5>
+                        <p class="card-text"></p>
+                       
+                        <%= list[i].duedate %> 
+                        </div>
+                    </div>
+                    <div class="mt-4">
+
+                    </div>
+                <% } %>
+            </div>
+    </div>
+    
+    
+    <script src="https://kit.fontawesome.com/8e4ebb668a.js" crossorigin="anonymous"></script>
+    <script>
+          async function postData(url, data) {
+  // Default options are marked with *
+  const response = await fetch(url, {
+    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+    mode: 'same-origin', // no-cors, *cors, same-origin
+    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: 'same-origin', // include, *same-origin, omit
+    headers: {
+      'Content-Type': 'application/json'
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    redirect: 'follow', // manual, *follow, error
+    referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+    body: JSON.stringify(data) // body data type must match "Content-Type" header
+  });
+  return response.json(); // parses JSON response into native JavaScript objects
+}
+
+        function myfun(){
+            console.log("hello")
+            var ids=[]
+            var checkbox =document.getElementsByClassName('boxes')
+            for(var i in checkbox)
+            {
+                if(checkbox[i].checked)
+                {
+                    ids.push(checkbox[i].value)
+                }
+            }
+           
+  
+postData('http://localhost:8000/delete', ids)
+  .then(data => {
+    console.log(data); // JSON data parsed by `data.json()` call
+  });
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
+</body>
+</html>
