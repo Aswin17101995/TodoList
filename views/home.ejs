@@ -13,7 +13,7 @@
         <div class="heading  display-2">
             TODO APP
         </div>
-        <form action='/addtask' method="post">
+        <form action='/addtask' method="post" >
             <div class="des form-group">
            
                 <lable class="text-muted" for="des">Description</lable><br>
@@ -53,64 +53,31 @@
             <div>
                 <div class="display-4 ">Tasks Pending </div>
                 <% for(var i in list){ %>
-                    <div class="card">
-                        <h5 class="card-header"> 
-                            <input class="boxes" type="checkbox" name='box' value="<%= list[i]._id %>"></a>
-                            <%= list[i].category %></h5>
-                        <div class="card-body">
-                        <h5 class="card-title"> <%= list[i].description %> </h5>
-                        <p class="card-text"></p>
-                       
-                        <%= list[i].duedate %> 
+                    <% console.log(list[i].completed) %>
+                    <%if(list[i].completed == false) { %>
+                        <div class="card">
+                            <h5 class="card-header"> 
+                                <input class="boxes" type="checkbox" name='box' value="<%= list[i]._id %>"></a>
+                                <%= list[i].category %></h5>
+                            <div class="card-body">
+                            <h5 class="card-title"> <%= list[i].description %> </h5>
+                            <p class="card-text"></p>
+                           
+                            <%= list[i].duedate %> 
+                            </div>
                         </div>
-                    </div>
-                    <div class="mt-4">
-
-                    </div>
+                        <div class="mt-4">
+    
+                        </div>
+                    <% } %>
+                   
                 <% } %>
             </div>
     </div>
     
     
     <script src="https://kit.fontawesome.com/8e4ebb668a.js" crossorigin="anonymous"></script>
-    <script>
-          async function postData(url, data) {
-  // Default options are marked with *
-  const response = await fetch(url, {
-    method: 'POST', // *GET, POST, PUT, DELETE, etc.
-    mode: 'same-origin', // no-cors, *cors, same-origin
-    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-    credentials: 'same-origin', // include, *same-origin, omit
-    headers: {
-      'Content-Type': 'application/json'
-      // 'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    redirect: 'follow', // manual, *follow, error
-    referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-    body: JSON.stringify(data) // body data type must match "Content-Type" header
-  });
-  return response.json(); // parses JSON response into native JavaScript objects
-}
-
-        function myfun(){
-            console.log("hello")
-            var ids=[]
-            var checkbox =document.getElementsByClassName('boxes')
-            for(var i in checkbox)
-            {
-                if(checkbox[i].checked)
-                {
-                    ids.push(checkbox[i].value)
-                }
-            }
-           
-  
-postData('http://localhost:8000/delete', ids)
-  .then(data => {
-    console.log(data); // JSON data parsed by `data.json()` call
-  });
-        }
-    </script>
+    <script src="/js/fetch.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
 </body>

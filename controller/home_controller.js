@@ -21,13 +21,20 @@ module.exports.addtask= function(req,res){
             if(err)
             {
                 console.log("error on adding")
+                return
             }
             console.log(newdata)
             return res.redirect('/')
         })
 }
 
-module.exports.delete = function(req,res){
-    console.log(req.body)
-  return res.render('respo',{title:req.body})
+module.exports.delete= async function(req,res)
+{
+    console.log("hello im comming",req.body)
+    var ids= req.body;
+    for(var i=0;i<ids.length;i++)
+    {
+        await Todo.findByIdAndUpdate(ids[i],{completed:true})
+    }
+   return res.redirect("/")
 }
